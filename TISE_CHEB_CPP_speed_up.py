@@ -16,7 +16,7 @@ libdir = './'
 mylib=ctl.load_library(libname, libdir)
 
 #number of chebyshev polynomials
-N=50
+N=100
 cheb_nodes=np.cos(np.pi*(2*np.arange(1,N+1)-1)/(2*N))
 
 
@@ -48,9 +48,19 @@ B=np.diag((-3/L**2)*cheb_nodes*(1-cheb_nodes**2)**(2))
 
 mapping=L*cheb_nodes/np.sqrt((1-cheb_nodes**2))
 
-alpha=-0.5
+# alpha=-0.5
+h_bar=1.0545718e-34
+m=9.10938356e-31
+alpha=-h_bar**2/(2*m)
 #onderste potentiaal is voor de harmonische oscillator
-pot_arr=0.5*mapping**2
+# pot_arr=0.5*mapping**2
+# inf=1000000000000000000
+# pot_arr=inf*np.ones(N)
+# pot_arr[mapping>=0]=0
+# pot_arr[mapping>=1]=inf
+omega=0.01
+pot_arr=0.5*m*omega**2*mapping**2
+# pot_arr=np.exp(-chebyshev_nodes**2)
 print("potentieel:",pot_arr)
 V=np.diag(pot_arr)
 
@@ -58,8 +68,7 @@ D_2_realline=A@A@Dirac_2+B@Dirac_1
 
 Hamiltonian_TISE=alpha*D_2_realline+V
 
-start_x=-1
-end_x=1
+
 
 
 ###CHEB FUNCTIONS
@@ -115,7 +124,9 @@ def chebyshev_approximation_rational(weights,x):
 
 #Weights for the linear combinations are calculated by solving the eigenvalue problem
 eigenval, eigenvectors =np.linalg.eig(Hamiltonian_TISE)
-print("Eigenvalues:",np.sort(eigenval))
+sorted_eigenvalues=np.sort(eigenval)
+
+print("Eigenvalues:", sorted_eigenvalues/sorted_eigenvalues[0])
 print("Calculated Energy:",np.min(eigenval),np.min(eigenval.real))
 
 
@@ -123,17 +134,10 @@ index_real_eigenval=np.where(eigenval==(eigenval.real))
 print("index:",index_real_eigenval[0])
 
 
-sorted_eigenvalues=np.sort(eigenval)
 Mode_eigenvector=0
 indices_sorted_eigenvalues=np.where(eigenval==sorted_eigenvalues[Mode_eigenvector])
 Num_eigenvector=indices_sorted_eigenvalues[0][0]
 weights_TISE=eigenvectors[:,Num_eigenvector]
-#
-# #Plotting the solution
-# x_domain_TISE=np.linspace(start_x,end_x,100)
-# plt.plot(x_domain_TISE,np.square(chebyshev_approximation_rational(weights_TISE,x_domain_TISE)))
-# plt.show()
-
 
 def save_eig_to_txt():
     """Saves all eigenvalues to a txt file"""
@@ -155,7 +159,41 @@ save_eig_to_txt()
 save_eigvec_to_txt()
 
 print(weights_TISE)
+start_x=-1
+end_x=1
+def plot_eigenfunction(weights_TISE):
+    #plotting the eigenfunction
+    domain=np.linspace(start_x,end_x,300)
 
-x_domain_TISE=np.linspace(start_x,end_x,100)
-plt.plot(x_domain_TISE,np.square(chebyshev_approximation_rational(weights_TISE,x_domain_TISE)))
-plt.show()
+    Cheb_approx_cpp=mylib.Approximation_Chebyshev
+    Cheb_approx_cpp.restype = ctypes.c_longlong
+    Cheb_approx_cpp.argtypes = [ctl.ndpointer(np.float64,flags='aligned, c_contiguous'), ctl.ndpointer(np.float64,flags='aligned, c_contiguous'),
+    ctl.ndpointer(np.float64,flags='aligned, c_contiguous'), ctl.ndpointer(np.float64,flags='aligned, c_contiguous'),ctypes.c_int,ctypes.c_int]
+
+    func=np.zeros(len(domain))
+    weights_TISE=np.array(weights_TISE)
+    print(Cheb_approx_cpp(weights_TISE,func,cheb_nodes,domain,len(domain),N))
+    print("func resultaat", func)
+
+    plt.plot(domain,np.square(func))
+    plt.show()
+
+# plot_eigenfunction(weights_TISE)
+#
+def riemann(a, b, dx):
+    if a > b:
+        a,b = b,a
+    # dx = (b-a)/n
+    n = int((b - a) / dx)
+    s = 0.0
+    x_coord = a
+    for i in range(n):
+        f_i = np.square(chebyshev_approximation_rational(weights_TISE,[x_coord]))[0]
+        s += f_i
+        x_coord += dx
+    return s * dx
+
+
+# print("oppervlakte:", riemann(start_x, end_x, 0.01))
+#
+#
