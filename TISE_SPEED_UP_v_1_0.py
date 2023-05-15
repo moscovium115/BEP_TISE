@@ -48,18 +48,18 @@ B=np.diag((-3/L**2)*cheb_nodes*(1-cheb_nodes**2)**(2))
 
 mapping=L*cheb_nodes/np.sqrt((1-cheb_nodes**2))
 
-# alpha=-0.5
-h_bar=1.0545718e-34
-m=9.10938356e-31
-alpha=-h_bar**2/(2*m)
+alpha=-0.5
+# h_bar=1.0545718e-34
+# m=9.10938356e-31
+# alpha=-h_bar**2/(2*m)
 #onderste potentiaal is voor de harmonische oscillator
 # pot_arr=0.5*mapping**2
 # inf=1000000000000000000
 # pot_arr=inf*np.ones(N)
 # pot_arr[mapping>=0]=0
 # pot_arr[mapping>=1]=inf
-omega=0.01
-pot_arr=0.5*m*omega**2*mapping**2
+# omega=0.01
+pot_arr=0.5*mapping**2
 # pot_arr=np.exp(-chebyshev_nodes**2)
 print("potentieel:",pot_arr)
 V=np.diag(pot_arr)
@@ -161,26 +161,26 @@ save_eigvec_to_txt()
 print(weights_TISE)
 start_x=-1.0
 end_x=1.0
-def plot_eigenfunction(weights_TISE):
-    #plotting the eigenfunction
-    domain=np.linspace(start_x,end_x,300)
-
-    Cheb_approx_cpp=mylib.Approximation_Chebyshev
-    Cheb_approx_cpp.restype = ctypes.c_longlong
-    Cheb_approx_cpp.argtypes = [ctl.ndpointer(np.float64,flags='aligned, c_contiguous'), ctl.ndpointer(np.float64,flags='aligned, c_contiguous'),
-                                ctl.ndpointer(np.float64,flags='aligned, c_contiguous'), ctl.ndpointer(np.float64,flags='aligned, c_contiguous'),ctypes.c_int,ctypes.c_int]
-
-    func=np.zeros(len(domain))
-    weights_TISE=np.array(weights_TISE)
-    print(Cheb_approx_cpp(weights_TISE,func,cheb_nodes,domain,len(domain),N))
-    print("func resultaat", func)
-
-    amplitude_gaussinan=np.sqrt(m*omega/(np.pi*h_bar))
-    dx=(end_x-start_x)/len(domain)
-    sq_func=np.square(func)
-    plt.plot(domain,sq_func/((dx*np.sum(sq_func))))
-    plt.plot(domain,amplitude_gaussinan*np.square(np.exp(-m*omega*np.square(domain)/(2*h_bar))))
-    plt.show()
+# def plot_eigenfunction(weights_TISE):
+#     #plotting the eigenfunction
+#     domain=np.linspace(start_x,end_x,300)
+#
+#     Cheb_approx_cpp=mylib.Approximation_Chebyshev
+#     Cheb_approx_cpp.restype = ctypes.c_longlong
+#     Cheb_approx_cpp.argtypes = [ctl.ndpointer(np.float64,flags='aligned, c_contiguous'), ctl.ndpointer(np.float64,flags='aligned, c_contiguous'),
+#                                 ctl.ndpointer(np.float64,flags='aligned, c_contiguous'), ctl.ndpointer(np.float64,flags='aligned, c_contiguous'),ctypes.c_int,ctypes.c_int]
+#
+#     func=np.zeros(len(domain))
+#     weights_TISE=np.array(weights_TISE)
+#     print(Cheb_approx_cpp(weights_TISE,func,cheb_nodes,domain,len(domain),N))
+#     print("func resultaat", func)
+#
+#     amplitude_gaussinan=np.sqrt(m*omega/(np.pi*h_bar))
+#     dx=(end_x-start_x)/len(domain)
+#     sq_func=np.square(func)
+#     plt.plot(domain,sq_func/((dx*np.sum(sq_func))))
+#     plt.plot(domain,amplitude_gaussinan*np.square(np.exp(-m*omega*np.square(domain)/(2*h_bar))))
+#     plt.show()
 
 # plot_eigenfunction(weights_TISE)
 #
