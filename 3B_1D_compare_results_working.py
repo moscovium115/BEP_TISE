@@ -16,9 +16,9 @@ alpha_y=(1+2*mass_ratio)/(-4*(1+1*mass_ratio))
 # alpha_x=-0.5
 # alpha_y=-0.5
 
-E_target=0.01
-v0=0.08887372
+E_target=1e-2
 # v0=0.34459535
+v0=0.08887372
 # v0=0.02613437
 
 
@@ -31,7 +31,7 @@ mylib=ctl.load_library(libname, libdir)
 # N_x=104
 # N_y=int(N_x/2)
 
-N_y=64
+N_y=90
 N_x=int(N_y/2)
 cheb_nodes_x=np.cos(np.pi*(2*np.arange(1,N_x+1)-1)/(4*N_x))
 print(cheb_nodes_x)
@@ -74,8 +74,8 @@ print("shape:", Dirac_2_y.shape)
 
 
 # L=1
-L_x=3*(1/np.sqrt(2*E_target))*(2+1/mass_ratio)/np.sqrt(1+1/mass_ratio)
-L_y=1.5*(1/np.sqrt(2*E_target))*(2+1/mass_ratio)/np.sqrt(1+1/mass_ratio)
+L_y=3*(1/np.sqrt(2*E_target))*(2+1/mass_ratio)/np.sqrt(1+1/mass_ratio)
+L_x=1.5*(1/np.sqrt(2*E_target))*(2+1/mass_ratio)/np.sqrt(1+1/mass_ratio)
 
 # L_x=2
 # L_y=2
