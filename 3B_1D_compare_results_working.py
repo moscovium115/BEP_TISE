@@ -15,11 +15,19 @@ alpha_x=-1/((1+mass_ratio))
 alpha_y=(1+2*mass_ratio)/(-4*(1+1*mass_ratio))
 # alpha_x=-0.5
 # alpha_y=-0.5
+energy_level=2
 
-E_target=1e-2
-# v0=0.34459535
-v0=0.08887372
-# v0=0.02613437
+if energy_level==1:
+    E_target=1e-1
+    v0=0.34459535
+elif energy_level==2:
+    E_target=1e-2
+    v0=0.08887372
+else:
+    E_target=1e-3
+    v0=0.02613437
+
+
 
 
 import matplotlib.pyplot as plt
@@ -31,7 +39,7 @@ mylib=ctl.load_library(libname, libdir)
 # N_x=104
 # N_y=int(N_x/2)
 
-N_y=90
+N_y=80
 N_x=int(N_y/2)
 cheb_nodes_x=np.cos(np.pi*(2*np.arange(1,N_x+1)-1)/(4*N_x))
 print(cheb_nodes_x)
@@ -186,20 +194,42 @@ print("hamiltonian shape:", Hamiltonian_TISE.shape)
 from jadapy import jdqr
 from jadapy import Target
 
-invers=Hamiltonian_TISE-E_target*sparse.identity(N_x*N_y)
-print(type(invers))
+# invers=Hamiltonian_TISE+0.266*sparse.identity(N_x*N_y)
+# invers=sp.sparse.linalg.inv(invers)
+# print(type(invers))
 # inv=sp.in
 
-def _prec(x, *args):
+
+# invers=np.linalg.inv(1*Hamiltonian_TISE.toarray()/E_target+2.71*np.identity(N_x*N_y))
+invers=Hamiltonian_TISE
+
+def prec_func(x, *args):
     # print("debug prec:",x.shape)
     # result=sp.sparse.linalg.inv(invers)@x
     result=invers.dot(x)
+    # result=sp.sparse.linalg.spsolve(invers,x)
     # print("debug prec:",result.shape)
     result=result.reshape((N_x*N_y,1))
     return result
 
-eigenval,eigenvec=jdqr.jdqr(Hamiltonian_TISE/E_target,num=3,target=-2.71,tol=1e-10,return_eigenvectors=True,subspace_dimensions=(20,50),maxit=2500)
-# eigenval,eigenvec=jdqr.jdqr(Hamiltonian_TISE/(E_target),num=1,target=-1.0386,tol=1e-9,return_eigenvectors=True,subspace_dimensions=(20,50),maxit=2500,prec=_prec)
+import time
+
+
+# eigenval,eigenvec=jdqr.jdqr(Hamiltonian_TISE/E_target,num=1,target=-2.71,tol=1e-10,return_eigenvectors=True,subspace_dimensions=(20,50),maxit=2500,prec=prec_func)
+num_tests=1
+
+test_arr=[]
+for test in range(num_tests):
+    start_time = time.time()
+    # eigenval,eigenvec=jdqr.jdqr(Hamiltonian_TISE/E_target,num=1,target=-2.71,tol=1e-10,return_eigenvectors=True,subspace_dimensions=(20,50),maxit=2500,prec=prec_func)
+
+    eigenval,eigenvec=jdqr.jdqr(Hamiltonian_TISE/E_target,num=1,target=-2.71,tol=1e-10,return_eigenvectors=True,subspace_dimensions=(20,50),maxit=2500)
+    end_time=time.time()
+    test_arr.append(end_time-start_time)
+
+
+print("running time:",np.mean(test_arr))
+
 
 
 print("eigenval:",np.real(eigenval[0]))
@@ -216,3 +246,22 @@ print(eigenvec[1,num_eigenvec],eigenvec[N_y+2,num_eigenvec])
 # eigenval,eigenvec=np.linalg.eig(Hamiltonian_TISE.toarray())
 # print("eigenval:",np.sort(eigenval))
 # print(Hamiltonian_TISE)
+
+start_vec=np.ones((N_x*N_y,1))
+start_time = time.time()
+vec_1=Hamiltonian_TISE*start_vec
+end_time=time.time()
+time_1=end_time-start_time
+print("running time matrix vector product:",time_1)
+
+start_time = time.time()
+W=np.reshape(start_vec,(N_y,N_x))
+product_1=alpha_y*(D_2_realline_y @ W)+alpha_x*(W @ D_2_realline_x.T)
+print("product_1:",product_1.shape)
+vec_2=np.reshape(product_1,(N_x*N_y,1))+V@start_vec
+end_time=time.time()
+time_2=end_time-start_time
+print("running time operator form",time_2)
+
+#deze snelheidsverbeteringen tellen erg op bij het berekenen van de eigenwaarden
+print(100*(time_2-time_1)/time_1, "% sneller")
