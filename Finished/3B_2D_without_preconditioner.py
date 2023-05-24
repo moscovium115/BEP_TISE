@@ -65,10 +65,6 @@ Dirac_2_x=construct_second_derivative_matrix(cheb_nodes_x,N_x_1)
 Dirac_1_y=construct_first_derivative_matrix(cheb_nodes_y,N_y_1)
 Dirac_2_y=construct_second_derivative_matrix(cheb_nodes_y,N_y_1)
 
-# print("Dirac_1_x:", Dirac_1_x)
-# print("Dirac_2_x:", Dirac_2_x)
-# print("Dirac_1_y:", Dirac_1_y)
-# print("Dirac_2_y:", Dirac_2_y)
 
 L_x=1*0.5*(1/np.sqrt(2*E_target))*(2+1/mass_ratio)/np.sqrt(1+1/mass_ratio)
 L_y=1*0.25*(1/np.sqrt(2*E_target))*(2+1/mass_ratio)/np.sqrt(1+1/mass_ratio)
@@ -127,41 +123,13 @@ for i in range(N_x_1):
                 V_arr[index_num]= -v0*(np.exp(-val_b)+np.exp(-val_c)+0*np.exp(-val_a))
 
 
-# print("potential matrix:", V_arr)
 V=sp.sparse.diags(V_arr)
 
 Hamiltonian_TISE+=V
 
-# print("hamiltonian matrix:")
-# print(Hamiltonian_TISE)
-
-# inverse=sp.sparse.linalg.inv(Hamiltonian_TISE)
-
-# print("inverse hamiltonian:")
-# print(inverse)
 
 from jadapy import jdqr
 from jadapy import Target
 
-
-def prec_func(x, *args):
-    #function approximates w in (A-sigma*I)w=x
-    # print("prec test")
-    res=E_target*(1/V_arr)*np.ravel(x)
-    # print(res)
-    res=res.reshape((-1,1))
-    # print(res)
-    # print("x:", x)
-    return x
-
-
-num_tests=3
-time_arr=[]
-for i in range(num_tests):
-    start_time=time.time()
-    eigenval,eigenvec=jdqr.jdqr(Hamiltonian_TISE/E_target,num=1,target=-2.3,tol=1e-10,return_eigenvectors=True,subspace_dimensions=(20,50),maxit=2500)
-    end_time=time.time()
-    time_arr.append(end_time-start_time)
-
-print("elapsed time:", np.mean(time_arr))
-#vergeet niet dat je nog steeds van de matrix een operator kan maken die matrix vector product veel sneller kan uitrekenen, moet uitzoeken hoe ik dat aan jadapy kan doorgeven
+eigenval,eigenvec=jdqr.jdqr(Hamiltonian_TISE/E_target,num=1,target=-2.3,tol=1e-10,return_eigenvectors=True,subspace_dimensions=(20,50),maxit=2500)
+ 
