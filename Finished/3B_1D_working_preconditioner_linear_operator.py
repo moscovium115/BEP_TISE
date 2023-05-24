@@ -134,11 +134,7 @@ num_eigenvec=0
 print(eigenvec[5,num_eigenvec],eigenvec[5+N_y+1,num_eigenvec])
 print(eigenvec)
 
-#Dit in jadapy uitproberen
-#De hamilton matrix class maken met overrided matrix multiplication symbol, gebruik chatgpt hiervoor
 
-# start_vec=np.ones((N_x*N_y,1))
-# start_vec.reshape((N_x*N_y,1))
 test_vec=np.arange(A.shape[0]*B.shape[0])
 test_vec.reshape((test_vec.shape[0],1))
 
@@ -160,14 +156,6 @@ def improved_product(test_vec):
     return test_vec_2
 
 import numpy
-
-#Misschien gaat er iets mis met de letters ofzooo???? ik snap het niet
-#verander A naar gewoon A_mat zodat er geen verwarring in jadapy kan optreden
-
-
-
-#nu nog E target erinverwerken
-#hij rekent ook echt veel sneller uit!! super nice
 
 
 
@@ -202,10 +190,10 @@ def mv(v):
     # return improved_product(v)/E_target
     # return normal_product(v)/E_target
 
+#testmat is de hamiltoniaan matrix, waarbij we als matrix vector product
+#de 'verbeterde' methode hebben gekozen
 test_mat = LinearOperator((N_x*N_y,N_x*N_y), matvec=mv)
 
-#vgm gaat er iets mis bij LinearOperator, want als we return hebben de normal product zien we dat dat veeeel langer duurt dan zonder lineaire operator
-#we krijgen wel performance gains bij grote waarden van N_x, maar dit hoort volgens mij niet
 test_arr=[]
 for i in range(num_tests):
     start_time = time.time()
