@@ -268,16 +268,16 @@ def prec_2d(x,*args):
     for i in range(Right_vector_matrix.shape[0]):
         # g_i_t=np.linalg.solve(F,G[i,:])
         p_i=Sylv_1_d_prec_1(G_mat[i,:],A_mat,B_mat,schur_A,schur_B)
-        # print("debug 2d prec 2:",np.linalg.norm(G[i,:]-F@p_i))
+        # print("debug 2d prec 2:",np.linalg.norm(G_mat[i,:]-F_mat@p_i))
         Vectorisation_mat[:,i]=p_i
 
     #van matrix naar vector gaan, voert al een transpose uit, tenzij je "order=F" meegeeft
     vector=np.reshape(Vectorisation_mat.T,(-1,1),order='F')
 
-    print("res 2d prec:",np.linalg.norm(sparse.kron(F_mat,E_mat)@vector-x))
+    # print("res 2d prec:",np.linalg.norm(sparse.kron(F_mat,E_mat)@vector-x))
     vec_2=np.linalg.inv(E_mat)@(Right_vector_matrix@(np.linalg.inv(F_mat).T))
     vec_2=np.reshape(vec_2,(-1,1),order='F')
-    # print("res 2d prec 2:", np.linalg.norm(sparse.kron(F_mat,E_mat)@vec_2-x))
+    print("res 2d prec 2:", np.linalg.norm(sparse.kron(F_mat,E_mat)@vec_2-x))
 
     return vector
 
