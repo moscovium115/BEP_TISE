@@ -1,0 +1,101 @@
+2d_inexact_prec
+
+
+energy level: 1 N_x= 30 time: 21.4711434841156 hamiltonian calls: 89 iterations: 13 prec calls: 87
+energy level: 1 N_x= 32 time: 25.98494791984558 hamiltonian calls: 88 iterations: 13 prec calls: 86
+energy level: 1 N_x= 34 time: 34.53772950172424 hamiltonian calls: 88 iterations: 13 prec calls: 86
+
+
+energy level: 2 N_x= 30 time: 20.798080921173096 hamiltonian calls: 85 iterations: 13 prec calls: 83
+energy level: 2 N_x= 32 time: 23.136775493621826 hamiltonian calls: 85 iterations: 13 prec calls: 83
+energy level: 2 N_x= 34 time: 31.90656280517578 hamiltonian calls: 85 iterations: 13 prec calls: 83
+
+
+energy level: 3 N_x= 30 time: 16.459020137786865 hamiltonian calls: 81 iterations: 13 prec calls: 79
+energy level: 3 N_x= 32 time: 24.25313091278076 hamiltonian calls: 85 iterations: 13 prec calls: 83
+energy level: 3 N_x= 34 time: 31.283536434173584 hamiltonian calls: 83 iterations: 13 prec calls: 81
+
+2d_inexact_prec
+
+
+energy level: 1 N_x= 30 time: 123.35530686378479 hamiltonian calls: 583 iterations: 28 prec calls: 0
+energy level: 1 N_x= 32 time: 204.46797227859497 hamiltonian calls: 747 iterations: 29 prec calls: 0
+energy level: 1 N_x= 34 time: 266.1722300052643 hamiltonian calls: 808 iterations: 29 prec calls: 0
+
+
+energy level: 2 N_x= 30 time: 80.63262581825256 hamiltonian calls: 461 iterations: 28 prec calls: 0
+energy level: 2 N_x= 32 time: 144.37417554855347 hamiltonian calls: 597 iterations: 29 prec calls: 0
+energy level: 2 N_x= 34 time: 214.4246745109558 hamiltonian calls: 637 iterations: 29 prec calls: 0
+
+
+energy level: 3 N_x= 30 time: 82.68605613708496 hamiltonian calls: 456 iterations: 28 prec calls: 0
+energy level: 3 N_x= 32 time: 137.80431628227234 hamiltonian calls: 571 iterations: 28 prec calls: 0
+energy level: 3 N_x= 34 time: 202.17539644241333 hamiltonian calls: 600 iterations: 29 prec calls: 0
+2d_inexact_prec
+
+
+energy level: 1 N_x= 32 time: 29.47304368019104 hamiltonian calls: 88 iterations: 13 prec calls: 86
+energy level: 1 N_x= 64 time: 406.28150701522827 hamiltonian calls: 87 iterations: 13 prec calls: 85
+energy level: 1 N_x= 80 time: 899.8823652267456 hamiltonian calls: 91 iterations: 13 prec calls: 89
+
+
+energy level: 2 N_x= 32 time: 20.59859824180603 hamiltonian calls: 85 iterations: 13 prec calls: 83
+energy level: 2 N_x= 64 time: 424.75248765945435 hamiltonian calls: 91 iterations: 13 prec calls: 89
+energy level: 2 N_x= 80 time: 919.8928093910217 hamiltonian calls: 95 iterations: 13 prec calls: 93
+
+
+energy level: 3 N_x= 32 time: 18.01282835006714 hamiltonian calls: 85 iterations: 13 prec calls: 83
+energy level: 3 N_x= 64 time: 402.35913848876953 hamiltonian calls: 87 iterations: 13 prec calls: 85
+energy level: 3 N_x= 80 time: 864.9241335391998 hamiltonian calls: 88 iterations: 13 prec calls: 86
+2d_geen_prec
+
+100 restarts gmres
+energy level: 1 N_x= 32 time: 197.58384084701538 hamiltonian calls: 760 iterations: 29 prec calls: 0
+
+nu exacte 2d prec:
+
+2d_exact_prec
+
+
+energy level: 1 N_x= 28 time: 92.38629651069641 hamiltonian calls: 63 iterations: 12 prec calls: 61
+energy level: 1 N_x= 30 time: 120.66102075576782 hamiltonian calls: 62 iterations: 12 prec calls: 60
+energy level: 1 N_x= 32 time: 157.29538083076477 hamiltonian calls: 62 iterations: 12 prec calls: 60
+
+
+energy level: 2 N_x= 28 time: 93.53185868263245 hamiltonian calls: 62 iterations: 12 prec calls: 60
+energy level: 2 N_x= 30 time: 120.64672040939331 hamiltonian calls: 62 iterations: 12 prec calls: 60
+energy level: 2 N_x= 32 time: 156.43996334075928 hamiltonian calls: 62 iterations: 12 prec calls: 60
+
+
+energy level: 3 N_x= 28 time: 88.95662355422974 hamiltonian calls: 59 iterations: 12 prec calls: 57
+energy level: 3 N_x= 30 time: 121.48776125907898 hamiltonian calls: 62 iterations: 13 prec calls: 60
+energy level: 3 N_x= 32 time: 161.21837210655212 hamiltonian calls: 64 iterations: 13 prec calls: 62
+
+
+2d_inexact_prec
+
+
+energy level: 1 N_x= 20 time: 31.670615434646606 hamiltonian calls: 64 iterations: 12 prec calls: 62
+2d_inexact_prec
+
+
+energy level: 1 N_x= 10 time: 2.2588133811950684 hamiltonian calls: 57 iterations: 12 prec calls: 55
+2d_inexact_prec
+
+
+energy level: 1 N_x= 10 time: 2.025773763656616 hamiltonian calls: 51 iterations: 11 prec calls: 49
+10&5&11&2.025773763656616&149\
+energy level: 1 N_x= 22 time: 38.30775022506714 hamiltonian calls: 57 iterations: 11 prec calls: 55
+22&11&11&38.30775022506714&167\
+energy level: 1 N_x= 24 time: 49.5424599647522 hamiltonian calls: 57 iterations: 11 prec calls: 55
+24&12&11&49.5424599647522&167\
+
+
+energy level: 2 N_x= 10 time: 2.351015090942383 hamiltonian calls: 59 iterations: 12 prec calls: 57
+10&5&12&2.351015090942383&173\
+energy level: 2 N_x= 22 time: 40.035521030426025 hamiltonian calls: 60 iterations: 12 prec calls: 58
+22&11&12&40.035521030426025&176\
+energy level: 2 N_x= 24 time: 52.371201276779175 hamiltonian calls: 61 iterations: 12 prec calls: 59
+24&12&12&52.371201276779175&179\
+
+
